@@ -1,9 +1,357 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Holistic Productivity with AI — Zack Akil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #555555;
+      --border: #111111;
+      --border-subtle: #dddddd;
+      --pastel-mint: #e6f4ea;
+      --pastel-butter: #fef7e0;
+      --pastel-blue: #e8f0fe;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif;
+    }
 
-  </head>
-  <body>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--fg);
+      background: var(--bg);
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .meta {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    section {
+      margin-bottom: 2.25rem;
+    }
+
+    h2 {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+    }
+
+    a {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      background: var(--pastel-butter);
+      color: var(--fg);
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--pastel-blue);
+      border: 1px solid var(--border);
+      padding: 0.1em 0.35em;
+    }
+
+    /* Exposed Grid Tables */
+    .grid {
+      display: grid;
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      .grid-3, .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cell {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem;
+    }
+
+    .cell-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .cell h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .cell p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .rule {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      background: var(--pastel-butter);
+      border: 1px solid var(--border);
+      padding: 0.65rem 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .spotlight {
+      background: var(--pastel-mint);
+      border: 2px solid var(--border);
+      padding: 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .spotlight-header {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .spotlight h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .spotlight p {
+      font-size: 0.92rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .spotlight p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Definition / Spec List */
+    dl {
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.75rem 0;
+      gap: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+    }
+
+    dt {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    dd {
+      font-size: 0.92rem;
+    }
+
+    .lead-quote {
+      font-family: "Caveat", "Snell Roundhand", "Brush Script MT", cursive;
+      font-size: 1.75rem;
+      line-height: 1.3;
+      color: var(--fg);
+      margin-bottom: 2rem;
+    }
+
+    .lead-quote mark {
+      background: #fff176;
+      color: var(--fg);
+      padding: 0 0.2em;
+    }
+
+    footer {
+      border-top: 2px solid var(--border);
+      padding-top: 1rem;
+      margin-top: 3rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
     <h1>Holistic Productivity with AI</h1>
-    <p>Content coming soon (by Thursday 22 October 2026)</p>
-  </body>
+    <span class="meta">PRESENTED ON WED 21 OCTOBER 2026 // ZACK AKIL // <a href="https://www.linkedin.com/in/zackakil/" target="_blank" rel="noopener">LINKEDIN</a></span>
+  </header>
+
+  <main>
+    <p class="lead-quote">
+      AI (like any other technology) when used <mark><strong><u>intentionally</u></strong></mark>, can help enable you to do your best and most fulfilling work.
+    </p>
+
+    <section>
+      <h2>01 / Redefining Productivity</h2>
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-label">Pillar 01</span>
+          <h3>More</h3>
+          <p>Optimizing purely for output volume produces low-value AI slop and noise.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-label">Pillar 02</span>
+          <h3>Better</h3>
+          <p>Using tools to raise quality without getting trapped in perfectionism.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-label">Pillar 03</span>
+          <h3>Sustainable</h3>
+          <p>Working in a way that supports holistic personal growth and improve work/life balance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>02 / Cognitive Load</h2>
+      <p>Ref: Oliver Lovell, <a href="https://www.ollielovell.com/book/" target="_blank" rel="noopener">Cognitive Load Theory in Action</a>. Do not remove all cognitive load—only remove unnecessary friction.</p>
+      <dl>
+        <div class="row">
+          <dt>Extrinsic Load [Automate]</dt>
+          <dd>Messy UIs, repetitive admin, formatting, finding coupon codes, and navigating complex settings panels.</dd>
+        </div>
+        <div class="row">
+          <dt>Intrinsic Load [Protect]</dt>
+          <dd>Creativity, critical thinking, empathy, relationship-building, and meaningful human communication.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section>
+      <h2>03 / AI Utility Matrix</h2>
+      <div class="rule">
+        CORE PRINCIPLE: AI is only useful when you can validate the output. Either immedtaly as a domain expert, or eventually as a cynical learner. 
+      </div>
+      <div class="grid grid-3">
+        <div class="cell">
+          <span class="cell-label">High Precision + High Validation</span>
+          <h3>Domain Acceleration</h3>
+          <p>Experts specifying exact requirements and verifying the output (e.g., directing code structure or filtering tour hotel logistics).</p>
+        </div>
+        <div class="cell">
+          <span class="cell-label">Exploratory Prompt + High Validation</span>
+          <h3>Accelerated Learning</h3>
+          <p>Asking AI <em>how</em> and <em>why</em> to do something unfamiliar, then stepping through manually to verify, understand, and internalize the skill.</p>
+        </div>
+        <div class="cell">
+          <span class="cell-label">Low Precision + Low Validation</span>
+          <h3>Slop Land (Full YOLO)</h3>
+          <p>Vague prompts with unreviewed outputs—unmonitored autonomous agents or generic automated customer service loops.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>04 / High-Leverage Pattern: Guided Navigation Over Automation</h2>
+      <div class="spotlight">
+        <span class="spotlight-header">PRIMARY RECOMMENDATION // <a href="https://gemini.google/overview/gemini-in-chrome/" target="_blank" rel="noopener">GEMINI IN CHROME</a></span>
+        <h3>Ask "How" and "Why" — Never "Do It For Me"</h3>
+        <p>When facing complex admin dashboards, messy settings panels, or unfamiliar software (like Gmail filter setups, YouTube studio panels, or macro keypad software), open <a href="https://gemini.google/overview/gemini-in-chrome/" target="_blank" rel="noopener">Gemini in Chrome</a> so it can see the current page context.</p>
+        <p><strong>Do not let AI click buttons for you.</strong> UIs are brittle and blind automation hides mistakes. Instead, ask AI to <strong>guide you step-by-step and explain why</strong> each setting matters. Walking through the steps yourself lets you catch hallucinations immediately and permanently levels up your own skill.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>05 / Practical Stack &amp; Workflows</h2>
+      <dl>
+        <div class="row">
+          <dt><a href="https://www.jeffsu.org/inbox-zero-tutorial-for-gmail/" target="_blank" rel="noopener">Inbox Zero Setup</a></dt>
+          <dd>Configure Gmail (or Outlook) with a multiple-inbox split view built around three triage labels: <code>To Do</code>, <code>Waiting</code>, and <code>Read Through</code> (see <a href="https://www.jeffsu.org/inbox-zero-tutorial-for-gmail/" target="_blank" rel="noopener">Jeff Su's Inbox Zero guide</a>). Open <a href="https://gemini.google/overview/gemini-in-chrome/" target="_blank" rel="noopener"><strong>Gemini in Chrome</strong></a> while in your inbox settings to guide you through the setup step-by-step and help create automatic <a href="https://support.google.com/mail/answer/6579" target="_blank" rel="noopener">Gmail filters</a> to route newsletters and recurring noise out of your primary inbox.</dd>
+        </div>
+        <div class="row">
+          <dt><a href="https://support.google.com/tasks/answer/7675772" target="_blank" rel="noopener">Google Tasks</a></dt>
+          <dd>Executive to-do listing. Keep a strict <code>Today</code> list that hits zero every evening, and move deferred tasks to a separate <code>Kick the Can</code> list so your workday is intentionally finished.</dd>
+        </div>
+        <div class="row">
+          <dt><a href="https://www.google.com/search?q=Macro+keys" target="_blank" rel="noopener">Macro Keys</a></dt>
+          <dd>Small programmable hardware keypads you can map to any repetitive workflow or multi-step shortcut in your day-to-day tools (for example, mapping a 3-key pad to your inbox triage labels for single-keystroke sorting). Use AI to guide you through the keypad's complex configuration software.</dd>
+        </div>
+        <div class="row">
+          <dt>[Advanced] <a href="https://developers.google.com/apps-script" target="_blank" rel="noopener">Google Apps Script</a></dt>
+          <dd>Use AI to help write a script that mirrors speaking or travel events as color-coded full-day calendar banners for instant monthly visibility.</dd>
+        </div>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <span>HOLISTIC PRODUCTIVITY WITH AI</span>
+    <span><a href="https://www.linkedin.com/in/zackakil/" target="_blank" rel="noopener">LINKEDIN.COM/IN/ZACKAKIL</a></span>
+  </footer>
+
+</body>
 </html>
